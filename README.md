@@ -1,1 +1,1 @@
-# NFT_E-commerce_BackEnd
+Make sure to have in MySQL a database called "ecommerce"

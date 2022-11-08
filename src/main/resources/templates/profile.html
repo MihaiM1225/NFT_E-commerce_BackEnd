@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    <title>See leaderboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div th:replace="fragments/general :: top"/>
+<div th:each="level : ${levels}">
+    <span th:text="${level.score}">score</span>
+    <span th:text="${level.user.username}">user</span>
+</div>
+</body>
+</html>

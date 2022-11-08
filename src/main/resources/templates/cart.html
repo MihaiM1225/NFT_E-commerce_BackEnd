@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    <script th:src="@{/css/func.js}" defer></script>
+    <title>See products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<a href="/cart/checkout">Checkout</a>
+<div th:replace="fragments/general :: top"/>
+<div th:each="product : ${cart}">
+    <span th:text="${product.product.name}">name</span>
+    <span id="price" th:text="${product.product.price}">name</span>
+    <span id="qty" th:text="${product.qty}">name</span>
+    <label>Quantity</label>
+    <input type="text" id="qty2">
+</div>
+<button id="addProductButton" onclick="add()">Get Price</button>
+<input type="text" id="total">
+</body>
+</html>

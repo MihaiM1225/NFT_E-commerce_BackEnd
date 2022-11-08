@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+    <title>See leaderboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div th:replace="fragments/general :: top"/>
+<label id="addFriend">
+    <textarea placeholder="Friend ID" id="textarea"></textarea>
+</label>
+<button onclick="location='/friends/addfriend/' + document.getElementById('textarea').value">Add Friend</button>
+<div th:each="friend : ${friends1}">
+    <span th:text="${friend.friendUsername}">score</span>
+    <a th:href="'/profile/' + ${friend.friendID}">View Profile</a>
+</div>
+</body>
+</html>
