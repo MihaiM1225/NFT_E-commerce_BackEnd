@@ -1,9 +1,7 @@
 package com.example.mvcproducts.bootstrap;
 
-import com.example.mvcproducts.domain.Product;
-import com.example.mvcproducts.domain.ProductType;
-import com.example.mvcproducts.domain.Role;
-import com.example.mvcproducts.domain.User;
+import com.example.mvcproducts.domain.*;
+import com.example.mvcproducts.services.LoginService;
 import com.example.mvcproducts.services.ProductService;
 import com.example.mvcproducts.services.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +13,12 @@ import java.util.List;
 @Component
 public class DataLoader implements CommandLineRunner {
   private final ProductService productService;
+  private final LoginService loginService;
   private final UserService userService;
 
-  public DataLoader(ProductService productService, UserService userService) {
+  public DataLoader(ProductService productService, LoginService loginService, UserService userService) {
     this.productService = productService;
+    this.loginService = loginService;
     this.userService = userService;
   }
 
@@ -32,6 +32,11 @@ public class DataLoader implements CommandLineRunner {
             new Product("Cake", "Collection1", "Sweet",20 )
     );
     productService.saveAll(productList);
+
+    Login login = new Login();
+    login.setEmail("a");
+    login.setPassword("b");
+    loginService.save(login);
 
     PasswordEncoder bcrypt = new BCryptPasswordEncoder();
     /*User user1=new User("user1",bcrypt.encode("user1"));
