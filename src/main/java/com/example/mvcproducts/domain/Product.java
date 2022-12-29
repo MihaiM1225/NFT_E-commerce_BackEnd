@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,10 +19,14 @@ public class Product {
   private String name;
   private String collection;
   private String description;
+  private String currency;
   private double price;
 
   @Lob
   private String picture;
+
+  @OneToMany(mappedBy = "product")
+  private Set<History> historySet = new HashSet<>();
 
   @ManyToOne
   private User user;
@@ -31,6 +37,4 @@ public class Product {
     this.collection = collection;
     this.price = price;
   }
-
-
 }

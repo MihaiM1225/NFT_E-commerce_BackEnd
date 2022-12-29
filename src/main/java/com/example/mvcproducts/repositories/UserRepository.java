@@ -4,5 +4,6 @@ import com.example.mvcproducts.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User,Long> {
-  User findByUsername(String username);
+  User findByLoginId(Long id);
+  User findUserById(Long id);
 }
