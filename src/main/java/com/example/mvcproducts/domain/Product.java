@@ -1,7 +1,9 @@
 package com.example.mvcproducts.domain;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +12,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
+@Setter
+@Getter
 public class Product {
 
   @Id
@@ -21,6 +25,7 @@ public class Product {
   private String description;
   private String currency;
   private double price;
+  private boolean visible;
 
   @Lob
   private String picture;

@@ -21,5 +21,6 @@ public class ProductBody {
     private String currency;
     private double price;
     private String picture;
+    private boolean visible;
 
 }

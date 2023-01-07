@@ -111,4 +111,22 @@ public class AccountController {
         return "{}";
     }
 
+    @PostMapping("/addFunds")
+    public String addFunds(@RequestBody FundsBody fundsBody) {
+        User user = userService.findUserById(Long.parseLong(fundsBody.getId_user()));
+        Wallet wallet = walletService.findByUserId(user.getId());
+        if(fundsBody.getCurrency().equals("eur")) {
+            wallet.setEur(wallet.getEur() + fundsBody.getPrice());
+        }
+        else if(fundsBody.getCurrency().equals("bitcoin")) {
+            wallet.setBitcoin(wallet.getBitcoin() + fundsBody.getPrice());
+        }
+        else if(fundsBody.getCurrency().equals("ron")) {
+            wallet.setRon(wallet.getRon() + fundsBody.getPrice());
+        }
+
+        walletService.save(wallet);
+        return "{}";
+    }
+
 }

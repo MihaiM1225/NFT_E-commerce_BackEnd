@@ -43,7 +43,7 @@ public class ProductController {
             for(History history : historyList) {
                 historyBodyList.add(new HistoryBody(history.getOwner(), history.getCurrency(), history.getPrice()));
             }
-            productBodyList.add(new ProductBody(product.getId(), product.getName(), product.getCollection(), product.getDescription(), historyBodyList, product.getCurrency(),product.getPrice(), product.getPicture()));
+            productBodyList.add(new ProductBody(product.getId(), product.getName(), product.getCollection(), product.getDescription(), historyBodyList, product.getCurrency(),product.getPrice(), product.getPicture(), product.isVisible()));
         }
 
         try {
@@ -52,12 +52,15 @@ public class ProductController {
             e.printStackTrace();
         }
 
-        return "[]";
+        return "{}";
     }
 
     @PostMapping("/buy")
     public String buy(@RequestBody PurchaseBody purchaseBody) {
         Product product = productService.findProductById(Long.parseLong(purchaseBody.getId_nft()));
+        if(!product.isVisible()) {
+            return "{'errors': 'Product not available'}";
+        }
         User user = userService.findUserById(Long.parseLong(purchaseBody.getId_user()));
         Wallet wallet = walletService.findByUserId(Long.parseLong(purchaseBody.getId_user()));
 
@@ -66,21 +69,21 @@ public class ProductController {
 
         if(product.getCurrency().equals("ron")) {
             if(product.getPrice() > wallet.getRon()) {
-                return "{'errors': 'Insufficient funds'}";
+                return "{'errors': ['Insufficient funds']}";
             }
             wallet.setRon(wallet.getRon() - product.getPrice());
             owner_wallet.setRon(owner_wallet.getRon() + product.getPrice());
         }
         else if(product.getCurrency().equals("eur")) {
             if(product.getPrice() > wallet.getEur()) {
-                return "{'errors': 'Insufficient funds'}";
+                return "{'errors': ['Insufficient funds']}";
             }
             wallet.setEur(wallet.getEur() - product.getPrice());
             owner_wallet.setEur(owner_wallet.getEur() + product.getPrice());
         }
         else {
             if(product.getPrice() > wallet.getBitcoin()) {
-                return "{'errors': 'Insufficient funds'}";
+                return "{'errors': ['Insufficient funds']}";
             }
             wallet.setBitcoin(wallet.getBitcoin() - product.getPrice());
             owner_wallet.setBitcoin(owner_wallet.getBitcoin() + product.getPrice());
@@ -94,6 +97,7 @@ public class ProductController {
         historyService.save(new_history);
 
         product.setUser(user);
+        product.setVisible(false);
         productService.save(product);
 
         List<Product> productList = productService.findAllByUserId(user.getId());
@@ -112,5 +116,23 @@ public class ProductController {
                 "'nfts': '" + nfts + "'," +
                 "'id': '" + user.getId() + "'" +
                 "}";
+    }
+
+    @PostMapping("/sell")
+    public String buy(@RequestBody SellBody sellBody) {
+        String currency = sellBody.getCurrency();
+        double price = sellBody.getPrice();
+        User user = userService.findUserById(Long.parseLong(sellBody.getId_user()));
+        Product product = productService.findProductById(Long.parseLong(sellBody.getId_nft()));
+        if(product.isVisible()) {
+            return "{'errors': ['Product is already on sale']}";
+        }
+
+        product.setPrice(price);
+        product.setCurrency(currency);
+        product.setVisible(true);
+        productService.save(product);
+
+        return "{}";
     }
 }
