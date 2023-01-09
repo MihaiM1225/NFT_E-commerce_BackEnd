@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'artisimum'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_218692373A1E437F9F72E675254CD7F6 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F8DC6A18D0ED43F9A97D4540306E140D }}
           package: '*.jar'
