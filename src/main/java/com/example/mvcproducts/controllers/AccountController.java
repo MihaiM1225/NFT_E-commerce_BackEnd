@@ -30,7 +30,7 @@ public class AccountController {
         this.productService = productService;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(@RequestBody LoginBody loginBody) {
         Login login = loginService.findByEmail(loginBody.email);
         if(login == null || !bcrypt.matches(loginBody.password, login.getPassword())) {

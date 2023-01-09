@@ -30,7 +30,7 @@ public class ProductController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/getList")
+    @PostMapping("/getList")
     public String getList() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
