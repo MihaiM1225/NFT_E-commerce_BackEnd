@@ -113,7 +113,7 @@ public class ProductController {
 
         return "{\"errors\": []," +
                 "\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}," +
-                "\"nfts\": \"" + nfts + "\"," +
+                "\"nfts\": " + nfts + "," +
                 "\"id\": \"" + user.getId() + "\"" +
                 "}";
     }
