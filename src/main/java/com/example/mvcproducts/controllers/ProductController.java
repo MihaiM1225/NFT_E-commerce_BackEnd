@@ -59,7 +59,7 @@ public class ProductController {
     public String buy(@RequestBody PurchaseBody purchaseBody) {
         Product product = productService.findProductById(Long.parseLong(purchaseBody.getId_nft()));
         if(!product.isVisible()) {
-            return "{'errors': 'Product not available'}";
+            return "{\"errors\": \"Product not available\"}";
         }
         User user = userService.findUserById(Long.parseLong(purchaseBody.getId_user()));
         Wallet wallet = walletService.findByUserId(Long.parseLong(purchaseBody.getId_user()));
@@ -69,21 +69,21 @@ public class ProductController {
 
         if(product.getCurrency().equals("ron")) {
             if(product.getPrice() > wallet.getRon()) {
-                return "{'errors': ['Insufficient funds']}";
+                return "{\"errors\": [\"Insufficient funds\"]}";
             }
             wallet.setRon(wallet.getRon() - product.getPrice());
             owner_wallet.setRon(owner_wallet.getRon() + product.getPrice());
         }
         else if(product.getCurrency().equals("eur")) {
             if(product.getPrice() > wallet.getEur()) {
-                return "{'errors': ['Insufficient funds']}";
+                return "{\"errors\": [\"Insufficient funds\"]}";
             }
             wallet.setEur(wallet.getEur() - product.getPrice());
             owner_wallet.setEur(owner_wallet.getEur() + product.getPrice());
         }
         else {
             if(product.getPrice() > wallet.getBitcoin()) {
-                return "{'errors': ['Insufficient funds']}";
+                return "{\"errors\": [\"Insufficient funds\"]}";
             }
             wallet.setBitcoin(wallet.getBitcoin() - product.getPrice());
             owner_wallet.setBitcoin(owner_wallet.getBitcoin() + product.getPrice());
@@ -111,10 +111,10 @@ public class ProductController {
         }
         nfts += "]";
 
-        return "{'errors': []," +
-                "'wallet': {'ron': '" + wallet.getRon() + "', 'eur': '" + wallet.getEur() + "', 'bitcoin': '" + wallet.getBitcoin() + "'}," +
-                "'nfts': '" + nfts + "'," +
-                "'id': '" + user.getId() + "'" +
+        return "{\"errors\": []," +
+                "\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}," +
+                "\"nfts\": \"" + nfts + "\"," +
+                "\"id\": \"" + user.getId() + "\"" +
                 "}";
     }
 
@@ -125,7 +125,7 @@ public class ProductController {
         User user = userService.findUserById(Long.parseLong(sellBody.getId_user()));
         Product product = productService.findProductById(Long.parseLong(sellBody.getId_nft()));
         if(product.isVisible()) {
-            return "{'errors': ['Product is already on sale']}";
+            return "{\"errors\": [\"Product is already on sale\"]}";
         }
 
         product.setPrice(price);

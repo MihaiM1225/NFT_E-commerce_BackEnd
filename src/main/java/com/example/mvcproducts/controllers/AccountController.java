@@ -35,15 +35,15 @@ public class AccountController {
         Login login = loginService.findByEmail(loginBody.email);
         if(login == null || !bcrypt.matches(loginBody.password, login.getPassword())) {
             return "{" +
-                    "'errors': ['Wrong username or password']," +
-                    "'wallet': {'ron': '', 'eur': '', 'bitcoin': ''}," +
-                    "'firstname': ''," +
-                    "'lastname': ''," +
-                    "'date': ''," +
-                    "'nfts': []," +
-                    "'email': ''," +
-                    "'phone': ''," +
-                    "'id': ''" +
+                    "\"errors\": [\"Wrong username or password\"]," +
+                    "\"wallet\": {\"ron\": \"\", \"eur\": \"\", \"bitcoin\": \"\"}," +
+                    "\"firstname\": \"\"," +
+                    "\"lastname\": \"\"," +
+                    "\"date\": \"\"," +
+                    "\"nfts\": []," +
+                    "\"email\": \"\"," +
+                    "\"phone\": \"\"," +
+                    "\"id\": \"\"" +
                     "}";
         }
         User user = userService.findByLoginId(login.getId());
@@ -59,15 +59,15 @@ public class AccountController {
         }
         nfts += "]";
 
-        return "{'errors': []," +
-                "'wallet': {'ron': '" + wallet.getRon() + "', 'eur': '" + wallet.getEur() + "', 'bitcoin': '" + wallet.getBitcoin() + "'}," +
-                "'firstname': '" + user.getFirstname() + "'," +
-                "'lastname': '" + user.getLastname() + "'," +
-                "'date': '" + user.getDate() + "'," +
-                "'nfts': '" + nfts + "'," +
-                "'email': '" + login.getEmail() + "'," +
-                "'phone': '" + user.getPhone() + "'," +
-                "'id': '" + user.getId() + "'" +
+        return "{\"errors\": []," +
+                "\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}," +
+                "\"firstname\": \"" + user.getFirstname() + "\"," +
+                "\"lastname\": \"" + user.getLastname() + "\"," +
+                "\"date\": \"" + user.getDate() + "\"," +
+                "\"nfts\": \"" + nfts + "\"," +
+                "\"email\": \"" + login.getEmail() + "\"," +
+                "\"phone\": \"" + user.getPhone() + "\"," +
+                "\"id\": \"" + user.getId() + "\"" +
                 "}";
     }
 
@@ -75,16 +75,16 @@ public class AccountController {
     public String register(@RequestBody RegisterBody registerBody) {
         Login login = loginService.findByEmail(registerBody.email);
         if(login != null) {
-            String aux = "['Email already exists'";
+            String aux = "[\"Email already exists\"";
 
             if(registerBody.password.length() < 8) {
-                aux += ",'Password too short']";
+                aux += ",\"Password too short\"]";
             }
             else {
                 aux += "]";
             }
 
-            return "{'errors':" + aux + "}";
+            return "{\"errors\":" + aux + "}";
         }
 
         User newUser = new User();
