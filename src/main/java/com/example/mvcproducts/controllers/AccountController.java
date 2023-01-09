@@ -64,7 +64,7 @@ public class AccountController {
                 "\"firstname\": \"" + user.getFirstname() + "\"," +
                 "\"lastname\": \"" + user.getLastname() + "\"," +
                 "\"date\": \"" + user.getDate() + "\"," +
-                "\"nfts\": \"" + nfts + "\"," +
+                "\"nfts\": " + nfts + "," +
                 "\"email\": \"" + login.getEmail() + "\"," +
                 "\"phone\": \"" + user.getPhone() + "\"," +
                 "\"id\": \"" + user.getId() + "\"" +
