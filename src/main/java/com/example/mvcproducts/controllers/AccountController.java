@@ -126,7 +126,7 @@ public class AccountController {
         }
 
         walletService.save(wallet);
-        return "{}";
+        return "{\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}";
     }
 
 }
