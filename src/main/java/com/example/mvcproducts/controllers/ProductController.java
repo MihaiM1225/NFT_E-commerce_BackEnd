@@ -133,6 +133,6 @@ public class ProductController {
         product.setVisible(true);
         productService.save(product);
 
-        return "{}";
+        return "{\"errors\": []}";
     }
 }

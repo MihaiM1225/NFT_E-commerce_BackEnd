@@ -108,7 +108,7 @@ public class AccountController {
         loginService.save(newLogin);
         walletService.save(newWallet);
 
-        return "{}";
+        return "{\"errors\": []}";
     }
 
     @PostMapping("/addFunds")
@@ -126,7 +126,7 @@ public class AccountController {
         }
 
         walletService.save(wallet);
-        return "{\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}";
+        return "{\"wallet\": {\"ron\": \"" + wallet.getRon() + "\", \"eur\": \"" + wallet.getEur() + "\", \"bitcoin\": \"" + wallet.getBitcoin() + "\"}}";
     }
 
 }
