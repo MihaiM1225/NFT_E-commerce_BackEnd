@@ -135,4 +135,35 @@ public class ProductController {
 
         return "{\"errors\": []}";
     }
+
+    @PostMapping("/uploadNFT")
+    public String upload(@RequestBody UploadBody uploadBody) {
+        Product product = new Product();
+        product.setVisible(true);
+        product.setCurrency(uploadBody.getCurrency());
+        product.setCollection(uploadBody.getCollection());
+        product.setCurrency(uploadBody.getCurrency());
+        product.setPrice(uploadBody.getPrice());
+        product.setDescription(uploadBody.getDescription());
+        product.setPicture(uploadBody.getImage());
+        product.setName(uploadBody.getName());
+        User user = userService.findUserById(Long.parseLong(uploadBody.getId_user()));
+        product.setUser(user);
+        productService.save(product);
+
+        List<HistoryBody> historyBodyList = new ArrayList<>();
+        ProductBody productBody = new ProductBody(product.getId(), product.getName(), product.getCollection(), product.getDescription(), historyBodyList, product.getCurrency(),product.getPrice(), product.getPicture(), product.isVisible());
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            return mapper.writeValueAsString(productBody);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return "{}";
+    }
+
 }
